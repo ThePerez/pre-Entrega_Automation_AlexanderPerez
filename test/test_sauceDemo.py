@@ -4,6 +4,8 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
 from utils.login_page import LoginPage
+from utils.catalog_page import CatalogPage
+from utils.cart_page import CartPage    
 
 
 @pytest.fixture 
