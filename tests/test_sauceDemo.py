@@ -6,6 +6,11 @@ from selenium import webdriver
 from utils.login_page import LoginPage
 from utils.catalog_page import CatalogPage
 from utils.cart_page import CartPage    
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from utils.login_page import LoginPage
+
 
 
 @pytest.fixture 
@@ -20,19 +25,24 @@ def driver():
 
 
 def test_login(driver):
-    # logeo de usuario con username y password
-    #click al boton de login 
-    #rediriga a la pagina de inventario
-    #verifixar el titulo de la pagina(ventanita)
-
-    login = LoginPage(driver)
-    login.cargar_pagina()
-    login.ingresar_usuario("standard_user")
-    login.ingresar_contraseña("secret_sauce")
+    # [1] Inicializar la Page Object
+    login = LoginPage(driver) 
+    
+    # [2] Navegar a la página
+    login.cargar_pagina() 
+    
+    # [3] Ingresar credenciales y hacer clic
+    login.ingresar_usuario('standard_user')
+    login.ingresar_contrasenia('secret_sauce')
     login.hacer_login()
-
+    
+    # [4] Validar login exitoso
+       
+    # Validar que la URL contenga '/inventory.html'
     assert "/inventory.html" in driver.current_url
-    assert "Swag Labs" in driver.title
+    
+    # Validar que el título de la pestaña (o página) contenga "Swag Labs"
+    assert "Swag Labs" in driver.title 
 
 #def test_catalogo():
 
