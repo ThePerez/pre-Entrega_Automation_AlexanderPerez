@@ -46,11 +46,7 @@ def test_login(driver):
 
 
 def test_catalogo(driver):
-    """
-    Obligatorio: Navegación y Verificación del Catálogo, incluyendo validación
-    de la sección ('Products') y de la pestaña/marca ('Swag Labs').
-    """
-    
+      
     # 1. Logeo (Pre-condición)
     print("\n[TEST] Ejecutando test_catalogo (Incluye Login)...")
     login = LoginPage(driver)
@@ -99,7 +95,7 @@ def test_catalogo(driver):
     assert product_price.startswith("$")
     time.sleep(5) 
     print("[SUCCESS] Test de Catálogo completado.")
-    
+
 #def test_carrito():
 
     # logeo de usuario con username y password
