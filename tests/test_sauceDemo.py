@@ -116,7 +116,7 @@ def test_carrito(driver):
     # 4. Navegar a la página de carrito
     print("[STEP] Navegando a la página de carrito...")
     catalogo.navegar_a_carrito()
-    time.sleep(5) 
+    time.sleep(10) 
 
     # 5. Validar navegación
     assert "/cart.html" in driver.current_url
