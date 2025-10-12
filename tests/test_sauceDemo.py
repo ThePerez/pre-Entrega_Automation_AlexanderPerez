@@ -46,7 +46,7 @@ def test_login(driver):
 
 
 def test_catalogo(driver):
-      
+
     # 1. Logeo (Pre-condición)
     print("\n[TEST] Ejecutando test_catalogo (Incluye Login)...")
     login = LoginPage(driver)
@@ -57,10 +57,8 @@ def test_catalogo(driver):
     time.sleep(5) 
     
     # 2. Inicializar la Page Object del Catálogo
-    catalogo = CatalogPage(driver)
-    
-    # --- Verificación del Catálogo ---
-    
+    catalogo = CatalogPage(driver) 
+      
     # 3. Validar el TÍTULO DE LA PESTAÑA/MARCA ('Swag Labs')
     print("[STEP] Validando el título de la pestaña del navegador...")
     assert "Swag Labs" in driver.title, \
@@ -96,11 +94,42 @@ def test_catalogo(driver):
     time.sleep(5) 
     print("[SUCCESS] Test de Catálogo completado.")
 
-#def test_carrito():
+def test_carrito(driver):   
+    # 1. Login
+    print("\n[TEST] Ejecutando test_carrito (Incluye Login)...")
+    login = LoginPage(driver)
+    login.cargar_pagina()
+    login.ingresar_usuario('standard_user')
+    login.ingresar_contrasenia('secret_sauce')
+    login.hacer_login()
+    time.sleep(5) # PAUSA: Catálogo cargado
 
-    # logeo de usuario con username y password
-    #click al boton de login 
-    #llevarme a la pagina de carrito de compras
-    #incremento de carrito al agregar un producto
+    # 2. Inicializar Page Objects
+    catalogo = CatalogPage(driver)
+    carrito = CartPage(driver)
 
-    #comprobar que el carrito aparezca el produto correcta
+    # 3. Agregar un producto al carrito
+    print("[STEP] Agregando el primer producto al carrito...")
+    nombre_producto_agregado = catalogo.agregar_primer_producto_al_carrito()
+    time.sleep(5) # PAUSA
+
+    # 4. Navegar a la página de carrito
+    print("[STEP] Navegando a la página de carrito...")
+    catalogo.navegar_a_carrito()
+    time.sleep(5) 
+
+    # 5. Validar navegación
+    assert "/cart.html" in driver.current_url
+    print("[SUCCESS] Navegación al carrito verificada.")
+    
+    # 6. Comprobar que el producto agregado esté presente
+    print(f"[STEP] Verificando que '{nombre_producto_agregado}' está en el carrito...")
+    producto_encontrado = carrito.verificar_producto_por_nombre(nombre_producto_agregado)
+    
+    # 7. Aserción final
+    assert producto_encontrado, \
+        f"Fallo: El producto '{nombre_producto_agregado}' no fue encontrado en el carrito."
+    print(f"[SUCCESS] Producto '{nombre_producto_agregado}' verificado correctamente en el carrito.")
+    time.sleep(5)
+    
+    print("[SUCCESS] Test de Carrito completado.")

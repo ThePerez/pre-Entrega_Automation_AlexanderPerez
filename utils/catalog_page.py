@@ -7,21 +7,30 @@ class CatalogPage:
         self.productos = (By.CLASS_NAME, "inventory_item")
         self.menu = (By.ID, "react-burger-menu-btn")
         self.filtros = (By.CLASS_NAME, "product_sort_container")
+        self.cart_icon = (By.CLASS_NAME, "shopping_cart_link") # <-- NUEVO LOCALIZADOR
 
-    def obtener_titulo(self):
-        return self.driver.find_element(*self.titulo).text
+    # ... [Métodos existentes] ...
 
-    def contar_productos(self):
-        return len(self.driver.find_elements(*self.productos))
+    # NUEVO MÉTODO
+    def agregar_primer_producto_al_carrito(self):
+        # 1. Obtener el contenedor del primer producto
+        productos = self.driver.find_elements(*self.productos)
+        if not productos:
+            raise Exception("No se encontraron productos para agregar al carrito.")
 
-    def obtener_primer_producto(self):
-        producto = self.driver.find_elements(*self.productos)[0]
-        nombre = producto.find_element(By.CLASS_NAME, "inventory_item_name").text
-        precio = producto.find_element(By.CLASS_NAME, "inventory_item_price").text
-        return nombre, precio
+        primer_producto = productos[0]
+        
+        # 2. Localizar el botón 'Add to cart' dentro del contenedor
+        add_to_cart_button = primer_producto.find_element(By.CLASS_NAME, "btn_inventory")
+        
+        # 3. Obtener el nombre (lo usaremos para la validación final)
+        nombre = primer_producto.find_element(By.CLASS_NAME, "inventory_item_name").text
+        
+        # 4. Hacer clic
+        add_to_cart_button.click()
+        
+        return nombre # Devolvemos el nombre del producto agregado
 
-    def menu_presente(self):
-        return self.driver.find_element(*self.menu).is_displayed()
-
-    def filtros_presentes(self):
-        return self.driver.find_element(*self.filtros).is_displayed()
+    # NUEVO MÉTODO
+    def navegar_a_carrito(self):
+        self.driver.find_element(*self.cart_icon).click()
