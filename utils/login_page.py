@@ -9,7 +9,7 @@ class LoginPage:
         self.password_input = (By.ID, "password")
         self.login_button = (By.ID, "login-button")
         
-    def cargar_pagina(self):  # <--- MÉTODO FALTANTE (Agregado)
+    def cargar_pagina(self): 
         """Navega a la URL de la página de login."""
         self.driver.get(self.url)
 

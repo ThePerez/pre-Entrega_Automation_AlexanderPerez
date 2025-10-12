@@ -1,5 +1,5 @@
 import pytest
-import time  # <-- ¡Asegúrate de que esta importación existe!
+import time  
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -7,8 +7,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
 from utils.login_page import LoginPage
 from utils.catalog_page import CatalogPage
-from utils.cart_page import CartPage  # Mantener si vas a desarrollar el test_carrito
-# ... [Otras importaciones]
+from utils.cart_page import CartPage  
 
 @pytest.fixture
 def driver():

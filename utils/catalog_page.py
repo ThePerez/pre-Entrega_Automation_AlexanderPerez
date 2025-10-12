@@ -32,7 +32,6 @@ class CatalogPage:
         precio = primer_producto.find_element(By.CLASS_NAME, "inventory_item_price").text
         return nombre, precio
 
-    # MÉTODOS REQUERIDOS POR test_carrito
 
     def agregar_primer_producto_al_carrito(self):
         productos = self.driver.find_elements(*self.productos) 
