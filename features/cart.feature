@@ -2,8 +2,7 @@ Feature: Funcionalidad de Carrito de Compras
   Como usuario quiero añadir productos a mi carrito
   Para verificar que el contador se actualiza correctamente
 
-  # Tags requeridos: @ui, @regression
-  @regression @ui
+   @regression @ui
   # Background que haga login automático con standard_user
   Background: Login con usuario estándar
     Given estoy en la página de login
