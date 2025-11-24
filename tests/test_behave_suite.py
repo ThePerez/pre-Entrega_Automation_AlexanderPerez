@@ -15,7 +15,7 @@ def test_behave_suite():
         '-t', '@smoke,@regression', 
         '-f', 'json', 
         '-o', 'reports/behave.json',
-        '-q' # Modo silencioso
+        '-q'
     ]
     
     logger.info(f"Ejecutando Behave con comando: {' '.join(command)}")
