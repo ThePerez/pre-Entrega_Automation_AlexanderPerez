@@ -2,7 +2,6 @@ Feature: Funcionalidad de Carrito de Compras
   Como usuario quiero añadir productos a mi carrito
   Para verificar que el contador se actualiza correctamente
 
-  @regression @ui
   Background: Login con usuario estándar
     Given estoy en la página de login
     When ingreso el usuario "standard_user" y la clave "secret_sauce"
