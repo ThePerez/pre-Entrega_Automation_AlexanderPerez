@@ -5,9 +5,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
-from utils.login_page import LoginPage
-from utils.catalog_page import CatalogPage
-from utils.cart_page import CartPage  
+
+from pages.login_page import LoginPage
 
 @pytest.fixture
 def driver():
@@ -56,7 +55,7 @@ def test_catalogo(driver):
     time.sleep(5) 
     
     # 2. Inicializar la Page Object del Catálogo
-    catalogo = CatalogPage(driver) 
+    catalogo = CatalogPage(driver)  # type: ignore
       
     # 3. Validar el TÍTULO DE LA PESTAÑA/MARCA ('Swag Labs')
     print("[STEP] Validando el título de la pestaña del navegador...")
@@ -104,8 +103,8 @@ def test_carrito(driver):
     time.sleep(5) # PAUSA: Catálogo cargado
 
     # 2. Inicializar Page Objects
-    catalogo = CatalogPage(driver)
-    carrito = CartPage(driver)
+    catalogo = CatalogPage(driver) # type: ignore
+    carrito = CartPage(driver) # type: ignore
 
     # 3. Agregar un producto al carrito
     print("[STEP] Agregando el primer producto al carrito...")
