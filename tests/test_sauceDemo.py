@@ -1,24 +1,34 @@
-# No necesita importar driver, ChromeDriverManager, o By.
 import pytest 
 from pages.login_page import LoginPage 
+from pages.checkout_information_page import CheckoutInformationPage # Necesaria para el nuevo test
 
-def test_login_simple(driver):
-
+# --- TEST PARAMETRIZADO DE LOGIN ---
+@pytest.mark.parametrize(
+    "usuario, clave, url_esperada, error_esperado", 
+    [
+        ("standard_user", "secret_sauce", "inventory.html", None), # Éxito
+        ("locked_out_user", "secret_sauce", None, "Epic sadface: Sorry, this user has been locked out."), # Bloqueado
+        ("usuario_invalido", "clave_invalida", None, "Epic sadface: Username and password do not match any user in this service"), # Inválido
+    ]
+)
+def test_login_parametrizado(driver, usuario, clave, url_esperada, error_esperado):
     login = LoginPage(driver)
-    login.abrir()
-    login.completar_usuario('standard_user')
-    login.completar_clave('secret_sauce')
-    login.hacer_clic_login()
     
-    # La aserción final se mantiene en el test
-    assert "/inventory.html" in driver.current_url
-    assert "Swag Labs" in driver.title
+    login.abrir().completar_usuario(usuario).completar_clave(clave).hacer_clic_login()
+    
+    if error_esperado:
+        assert login.esta_error_visible()
+        assert login.obtener_mensaje_error() == error_esperado
+    else:
+        assert url_esperada in driver.current_url
+        assert not login.esta_error_visible()
 
+
+# --- TESTS DE FLUJO ---
 
 def test_catalogo_valido(login_exitoso):
     catalogo = login_exitoso
     
-    # Validaciones usando métodos de la página (POM)
     assert catalogo.obtener_titulo() == "Products"
     assert catalogo.contar_productos() > 0
     
@@ -28,14 +38,34 @@ def test_catalogo_valido(login_exitoso):
 
 
 def test_agregar_producto_y_navegar_a_carrito(login_exitoso):
- 
-    catalogo = login_exitoso # type: ignore
+    catalogo = login_exitoso
 
-    # Acciones de alto nivel
     nombre_producto_agregado = catalogo.agregar_primer_producto_al_carrito()
-
-    # La navegación retorna la siguiente Page Object (CartPage)
     carrito = catalogo.navegar_a_carrito()
 
-    # Validaciones en la nueva página
     assert carrito.verificar_producto_por_nombre(nombre_producto_agregado)
+
+
+def test_flujo_compra_completa(login_exitoso):
+    catalogo = login_exitoso
+
+    # 1. Agregar Producto y Navegar al Carrito
+    nombre_producto = catalogo.agregar_primer_producto_al_carrito()
+    carrito = catalogo.navegar_a_carrito() 
+
+    # 2. Iniciar Checkout (CartPage -> InfoPage)
+    info_page = carrito.iniciar_checkout()
+
+    # 3. Llenar Información y Continuar (InfoPage -> OverviewPage)
+    overview_page = info_page.completar_informacion("Alexander", "Perez", "1000") \
+                            .continuar_a_overview()
+
+    # 4. Validar Resumen de la Orden
+    assert overview_page.obtener_nombre_producto() == nombre_producto
+    
+    # 5. Finalizar Compra (OverviewPage -> CompletePage)
+    confirmacion_page = overview_page.finalizar_compra()
+
+    # 6. Validar Éxito
+    assert confirmacion_page.es_pagina_de_confirmacion()
+    assert confirmacion_page.obtener_mensaje_cabecera() == "THANK YOU FOR YOUR ORDER"
