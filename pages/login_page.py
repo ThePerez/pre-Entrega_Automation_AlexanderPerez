@@ -1,32 +1,50 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 class LoginPage:
-    
-    USERNAME_INPUT = (By.ID, "user-name")
-    PASSWORD_INPUT = (By.ID, "password")
-    LOGIN_BUTTON = (By.ID, "login-button")
-    
-    #LOCATOR para el error (visto en los requerimientos)
-    ERROR_MESSAGE = (By.CSS_SELECTOR, 'h3[data-test="error"]')
-    
-    def __init__(self, driver, url="https://www.saucedemo.com/"):
+    URL = "https://www.saucedemo.com/"
+
+    # Localizadores
+    _USER_INPUT = (By.ID, "user-name")
+    _PASS_INPUT = (By.ID, "password")
+    _LOGIN_BUTTON = (By.ID, "login-button")
+    _ERROR_MESSAGE = (By.CSS_SELECTOR, "[data-test='error']")
+
+    def __init__(self, driver):
         self.driver = driver
-        self.url = url
+        self.wait = WebDriverWait(driver, 10)
+
+    def abrir(self):
+        self.driver.get(self.URL)
+        return self
+
+    def completar_usuario(self, usuario: str):
+        campo = self.wait.until(EC.visibility_of_element_located(self._USER_INPUT))
+        campo.clear()
+        campo.send_keys(usuario)
+        return self
+
+    def completar_clave(self, clave: str):
+        campo = self.wait.until(EC.visibility_of_element_located(self._PASS_INPUT))
+        campo.clear()
+        campo.send_keys(clave)
+        return self
+
+    def hacer_clic_login(self):
+        self.driver.find_element(*self._LOGIN_BUTTON).click()
+        return self
+
+    def login_completo(self, usuario, clave):
+        """Método de conveniencia que realiza el login y navega al catálogo."""
+        self.abrir()
+        self.completar_usuario(usuario)
+        self.completar_clave(clave)
+        self.hacer_clic_login()
         
-    def open(self):
-        self.driver.get(self.url)
-
-    def login(self, username, password):
-        self.driver.find_element(*self.USERNAME_INPUT).send_keys(username)
-        self.driver.find_element(*self.PASSWORD_INPUT).send_keys(password)
-        self.driver.find_element(*self.LOGIN_BUTTON).click()
-
-    # AÑADIR MÉTODOS DE VALIDACIÓN DE ERRORES.
-    def is_error_message_visible(self):
-        try:
-            return self.driver.find_element(*self.ERROR_MESSAGE).is_displayed()
-        except:
-            return False
-
-    def get_error_message_text(self):
-        return self.driver.find_element(*self.ERROR_MESSAGE).text
+        # Espera que la URL cambie al inventario antes de retornar
+        self.wait.until(EC.url_to_be(self.URL + "inventory.html"))
+        
+        # Importación lazy
+        from pages.catalog_page import CatalogPage 
+        return CatalogPage(self.driver)
