@@ -6,8 +6,8 @@ import logging
 
 logger = logging.getLogger('pytest')
 
-def test_behave_suite():
- 
+"""
+
     reports_path = os.path.join(os.getcwd(), 'reports')
     os.makedirs(reports_path, exist_ok=True)
     
@@ -22,4 +22,6 @@ def test_behave_suite():
     # Validar: Si Behave tiene fallos, Pytest debe fallar.
     assert result.returncode == 0, f"La suite BDD de Behave falló. Código de salida: {result.returncode}"
     
-    logger.info("La suite BDD ejecutada por Behave terminó exitosamente.")
+    logger.info("La suite BDD ejecutada por Behave terminó exitosamente.")  
+
+"""

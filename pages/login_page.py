@@ -1,11 +1,12 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException # Importación para manejo de errores
+from selenium.common.exceptions import TimeoutException
 
 class LoginPage:
     URL = "https://www.saucedemo.com/"
 
+    # Localizadores
     _USER_INPUT = (By.ID, "user-name")
     _PASS_INPUT = (By.ID, "password")
     _LOGIN_BUTTON = (By.ID, "login-button")
@@ -38,7 +39,8 @@ class LoginPage:
     # Métodos de verificación para la parametrización de error
     def esta_error_visible(self) -> bool:
         try:
-            self.wait.until(EC.visibility_of_element_located(self._ERROR_MESSAGE))
+            wait_error = WebDriverWait(self.driver, 3) 
+            wait_error.until(EC.visibility_of_element_located(self._ERROR_MESSAGE))
             return True
         except TimeoutException:
             return False
@@ -46,9 +48,8 @@ class LoginPage:
     def obtener_mensaje_error(self) -> str:
         if self.esta_error_visible():
             return self.driver.find_element(*self._ERROR_MESSAGE).text
-        return ""
-    
-    # Método de alto nivel para el caso de éxito (retorna CatalogPage)
+        return ""    
+
     def login_completo(self, usuario, clave):
         self.abrir()
         self.completar_usuario(usuario)
@@ -56,7 +57,6 @@ class LoginPage:
         self.hacer_clic_login()
         
         self.wait.until(EC.url_to_be(self.URL + "inventory.html"))
-        
-        # Importación diferida (Lazy Import) para evitar el warning
-        from pages.catalog_page import CatalogPage 
-        return CatalogPage(self.driver)
+
+        from pages.inventory_page import InventoryPage 
+        return InventoryPage(self.driver) # Ahora InventoryPage está definida aquí
