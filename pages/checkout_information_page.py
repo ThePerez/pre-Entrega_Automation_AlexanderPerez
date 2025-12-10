@@ -24,12 +24,10 @@ class CheckoutInformationPage:
     def continuar_a_overview(self):
         # 1. Esperar a que el botón sea visible e interactuable
         boton = self.wait.until(EC.element_to_be_clickable(self._CONTINUE_BUTTON))
-        
-        # 🔑 TRUCO FINAL: Pequeña pausa para asegurar que los inputs se registraron
-        # (Necesario por la latencia de OneDrive/Sistema cargado)
+
         time.sleep(1)
         
-        # 2. Clic forzado con JavaScript (Infalible)
+        # 2. Clic forzado 
         self.driver.execute_script("arguments[0].click();", boton)
         
         # 3. Esperar cambio de URL

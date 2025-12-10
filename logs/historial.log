@@ -1,0 +1,25 @@
+20:26:31 INFO WDM – ====== WebDriver manager ======
+20:26:33 INFO WDM – Get LATEST chromedriver version for google-chrome
+20:26:34 INFO WDM – Get LATEST chromedriver version for google-chrome
+20:26:35 INFO WDM – Driver [C:\Users\alexander.perez_klim\.wdm\drivers\chromedriver\win64\142.0.7444.175\chromedriver-win32/chromedriver.exe] found in cache
+20:26:50 INFO WDM – ====== WebDriver manager ======
+20:26:52 INFO WDM – Get LATEST chromedriver version for google-chrome
+20:26:53 INFO WDM – Get LATEST chromedriver version for google-chrome
+20:26:54 INFO WDM – Driver [C:\Users\alexander.perez_klim\.wdm\drivers\chromedriver\win64\142.0.7444.175\chromedriver-win32/chromedriver.exe] found in cache
+20:26:59 INFO WDM – ====== WebDriver manager ======
+20:27:01 INFO WDM – Get LATEST chromedriver version for google-chrome
+20:27:02 INFO WDM – Get LATEST chromedriver version for google-chrome
+20:27:02 INFO WDM – Driver [C:\Users\alexander.perez_klim\.wdm\drivers\chromedriver\win64\142.0.7444.175\chromedriver-win32/chromedriver.exe] found in cache
+20:27:08 INFO WDM – ====== WebDriver manager ======
+20:27:09 INFO WDM – Get LATEST chromedriver version for google-chrome
+20:27:10 INFO WDM – Get LATEST chromedriver version for google-chrome
+20:27:11 INFO WDM – Driver [C:\Users\alexander.perez_klim\.wdm\drivers\chromedriver\win64\142.0.7444.175\chromedriver-win32/chromedriver.exe] found in cache
+20:27:16 INFO WDM – ====== WebDriver manager ======
+20:27:18 INFO WDM – Get LATEST chromedriver version for google-chrome
+20:27:19 INFO WDM – Get LATEST chromedriver version for google-chrome
+20:27:20 INFO WDM – Driver [C:\Users\alexander.perez_klim\.wdm\drivers\chromedriver\win64\142.0.7444.175\chromedriver-win32/chromedriver.exe] found in cache
+20:27:25 INFO WDM – ====== WebDriver manager ======
+20:27:27 INFO WDM – Get LATEST chromedriver version for google-chrome
+20:27:28 INFO WDM – Get LATEST chromedriver version for google-chrome
+20:27:29 INFO WDM – Driver [C:\Users\alexander.perez_klim\.wdm\drivers\chromedriver\win64\142.0.7444.175\chromedriver-win32/chromedriver.exe] found in cache
+20:27:35 ERROR root – FALLO en test: test_flujo_compra_completa. Captura guardada en reports\screens\test_flujo_compra_completa.png

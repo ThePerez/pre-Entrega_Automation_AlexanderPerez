@@ -70,4 +70,4 @@ def test_flujo_compra_completa(login_exitoso):
     assert confirmacion_page.es_pagina_de_confirmacion()
   
   # FORZAMOS EL FALLO para probar el screenshot
-    assert False, "PRUEBA DE SCREENSHOT: Fallo forzado para verificar el reporte"
+  #  assert False, "PRUEBA DE SCREENSHOT: Fallo forzado para verificar el reporte"

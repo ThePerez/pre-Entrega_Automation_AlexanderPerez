@@ -1,5 +1,3 @@
-# tests/test_behave_suite.py
-
 import subprocess
 import os
 import logging

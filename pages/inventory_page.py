@@ -6,22 +6,20 @@ class InventoryPage:
     
     # --- Localizadores ---
     _INVENTORY_TITLE = (By.CSS_SELECTOR, ".title")
-    _CART_ICON = (By.CSS_SELECTOR, ".shopping_cart_link") # Modificado para ser más general
+    _CART_ICON = (By.CSS_SELECTOR, ".shopping_cart_link") 
     _INVENTORY_ITEMS = (By.CLASS_NAME, "inventory_item")
     _FIRST_ITEM_NAME = (By.CSS_SELECTOR, ".inventory_item_name")
     _FIRST_ITEM_PRICE = (By.CLASS_NAME, "inventory_item_price")
     _FIRST_ADD_TO_CART_BTN = (By.XPATH, "(//button[text()='Add to cart'])[1]") 
     
-    # LOCATOR DINÁMICO (manteniendo tu implementación)
+    
     def ADD_TO_CART_BTN(self, product_name):
         return (By.XPATH, f"//div[text()='{product_name}']/ancestor::div[@class='inventory_item']//button[text()='Add to cart']")
 
     def __init__(self, driver):
         self.driver = driver
         self.wait = WebDriverWait(driver, 10)
-
-    # --- Métodos de Verificación (para test_catalogo_valido) ---
-    
+        
     def obtener_titulo(self):
         # El test usa obtener_titulo, no get_title_text
         return self.wait.until(EC.visibility_of_element_located(self._INVENTORY_TITLE)).text
