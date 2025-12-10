@@ -1,48 +1,75 @@
-Pre-Entrega: Automatización de UI con Pytest y Selenium.
+# 🚀 QA Automation Framework | Hybrid (UI + API)
 
-Este proyecto documenta la implementación de una suite de pruebas de automatización de interfaz de usuario para Sauce Demo, utilizando el patrón Page Object Model (POM).
+![Python](https://img.shields.io/badge/Python-3.13+-blue.svg)
+![Pytest](https://img.shields.io/badge/Pytest-Framework-brightgreen.svg)
+![Selenium](https://img.shields.io/badge/Selenium-UI%20Automation-yellow.svg)
+![Requests](https://img.shields.io/badge/Requests-API%20Testing-orange.svg)
 
-🎯 Objetivo del Proyecto
-El proyecto verifica la funcionalidad crítica de la aplicación, asegurando:
+Este repositorio contiene un framework de automatización de pruebas robusto y escalable, diseñado para validar tanto el Frontend (UI) como el Backend (API) de aplicaciones modernas. 
 
-Login Exitoso: Validación de credenciales de usuario estándar.
+El proyecto implementa las mejores prácticas de la industria, incluyendo el patrón **Page Object Model (POM)**, inyección de dependencias con **Fixtures**, generación de reportes detallados con evidencia visual (**Screenshots automáticos**) y **Logging** centralizado.
 
-Carga del Catálogo: Verificación de títulos, existencia de productos y formato de precios.
+---
 
-Flujo del Carrito: Capacidad para agregar un producto y navegar correctamente a la página del carrito.
+## 🎯 Alcance del Proyecto
 
-🛠️ Stack Tecnológico
+### 🖥️ UI Automation (Frontend)
+Pruebas E2E sobre **SauceDemo (Swag Labs)** enfocadas en flujos críticos de negocio:
+- **Autenticación:** Validación de usuarios estándar, bloqueados y credenciales inválidas (Parametrización).
+- **Catálogo de Productos:** Verificación de inventario, precios e integridad de datos.
+- **Carrito de Compras:** Flujo de agregar/remover ítems.
+- **Checkout E2E:** Ciclo completo de compra (Datos de envío -> Resumen -> Finalización) con validaciones de éxito.
 
-Python 3.x	
-Pytest	
-Selenium WebDriver	
-WebDriver Manager	
-pytest-html	Reporting	
+### 🔌 API Automation (Backend)
+Pruebas de integración sobre **JSONPlaceholder** y **Restful-Booker**:
+- **CRUD Completo:** Create, Read, Update (PATCH), Delete.
+- **Ciclo de Vida del Dato:** Tests encadenados (E2E) donde se crea un recurso, se modifica y se elimina validando la persistencia.
+- **Autenticación API:** Obtención y validación de Tokens de seguridad.
+- **Validación de Esquemas:** Verificación de códigos de estado (200, 201, 204), headers y tiempos de respuesta (< 3s).
 
-📂 Estructura del Proyecto (POM)
-El proyecto separa la lógica de prueba (en tests/) de la representación de la UI (en utils/).
+---
 
-.
-├── tests/
-│   └── test_sauceDemo.py      # Casos de prueba (login, catálogo, carrito).
-└── utils/
-    ├── login_page.py          # Page Object para el login.
-    ├── catalog_page.py        # Page Object para el inventario.
-    └── cart_page.py           # Page Object para el carrito.
+## 🛠️ Stack Tecnológico
 
-🚀 Instalación y Ejecución
+| Herramienta | Uso Principal |
+|-------------|---------------|
+| **Python 3.x** | Lenguaje base del framework. |
+| **Pytest** | Runner de pruebas, gestión de fixtures y aserciones. |
+| **Selenium WebDriver** | Automatización de interacciones con el navegador. |
+| **Requests** | Cliente HTTP para pruebas de API REST. |
+| **WebDriver Manager** | Gestión automática de binarios (ChromeDriver). |
+| **Pytest-HTML** | Generación de reportes visuales autocontenidos. |
+| **Logging** | Registro detallado de la ejecución para depuración. |
 
-1. Configuración del Entorno
-Se debe activar el entorno virtual y asegurar que las dependencias estén instaladas:
+---
 
-# Activar el entorno virtual (PowerShell)
-.\venv\Scripts\Activate
+## 📂 Arquitectura del Proyecto
 
-# Instalar dependencias
-pip install pytest selenium webdriver-manager pytest-html
+La estructura sigue un diseño modular para facilitar el mantenimiento y la escalabilidad:
 
-2. Comando para Ejecutar las Pruebas
-
-Ejecuta la suite de pruebas completa desde la raíz del proyecto para generar el reporte de resultados:
-
-pytest -v --html=reporte.html tests/
+```text
+proyecto/
+├── logs/                   # Historial de ejecuciones (suite.log)
+├── pages/                  # Page Objects (POM) - Abstracción de UI
+│   ├── base_page.py
+│   ├── login_page.py
+│   ├── inventory_page.py
+│   ├── cart_page.py
+│   ├── checkout_information_page.py
+│   └── checkout_overview_page.py
+├── reports/                # Reportes HTML generados
+│   └── screens/            # Capturas de pantalla de respaldo
+├── tests/                  # Tests de UI (Frontend)
+│   ├── conftest.py         # Configuración y Hooks de UI (Screenshots)
+│   └── test_sauceDemo.py
+├── tests_api/              # Tests de API (Backend)
+│   ├── conftest.py         # Fixtures y Hooks de API
+│   ├── test_login_api.py
+│   ├── test_users_api.py
+│   ├── test_create_user_api.py
+│   └── test_post_lifecycle.py
+├── utils/                  # Utilidades transversales
+│   ├── api_utils.py
+│   └── logger.py           # Configuración de Logging
+├── pytest.ini              # Configuración global de Pytest
+└── requirements.txt        # Dependencias del proyecto
